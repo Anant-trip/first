@@ -32,3 +32,39 @@ build/
 ### VS Code ###
 .vscode/
 /.metadata/
+
+### Environment Variables & Secrets (IMPORTANT - DO NOT REMOVE) ###
+.env
+.env.*
+!.env.example
+.local
+.credentials
+secret.properties
+secrets.properties
+bootstrap.properties
+application-prod.properties
+
+### SSL/TLS Certificates ###
+*.pem
+*.key
+*.cert
+*.crt
+
+### Temporary Files ###
+*.log
+*.tmp
+*.temp
+*.bak
+*.backup
+*.swp
+*~
+
+### Database Files ###
+*.db
+*.sqlite
+*.sqlite3
+
+### Coverage Reports ###
+coverage/
+.coverage
+htmlcov/

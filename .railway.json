@@ -1,0 +1,11 @@
+{
+  "build": {
+    "builder": "DOCKERFILE"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "startCommand": "java -Dspring.profiles.active=railway -jar target/*.jar",
+    "restartPolicyMaxRetries": 0,
+    "restartPolicyWindowMs": 60000
+  }
+}
