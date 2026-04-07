@@ -11,9 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
 	@Bean
-public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(c -> c.disable())
         .authorizeHttpRequests(req -> req
             // Allow DispatcherType.FORWARD so internal view resolution isn't blocked
