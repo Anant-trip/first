@@ -12,30 +12,25 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { // Added throws Exception
+	@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf(c -> c.disable())
         .authorizeHttpRequests(req -> req
-                // 1. Allow the endpoints
-                .requestMatchers("/register", "/login", "/auth").permitAll()
-                // 2. Allow static resources (CSS, JS, Images)
-                .requestMatchers("/css/**", "/js/**", "/images/**", "/static/**").permitAll()
-                // 3. IMPORTANT: Allow the internal WEB-INF views if using JSP
-                .requestMatchers("/WEB-INF/views/**").permitAll() 
-                .anyRequest().authenticated()
+            // Allow DispatcherType.FORWARD so internal view resolution isn't blocked
+            .dispatcherTypeMatchers(javax.servlet.DispatcherType.FORWARD).permitAll() 
+            .requestMatchers("/register", "/login", "/auth").permitAll()
+            .requestMatchers("/WEB-INF/**", "/static/**", "/css/**", "/js/**").permitAll()
+            .anyRequest().authenticated()
         )
         .formLogin(f -> f
-                .loginPage("/login")
-                .loginProcessingUrl("/auth")
-                .defaultSuccessUrl("/dashboard", true) // 'true' forces it to go to dashboard
-                .failureUrl("/login?msg=error")
-                .permitAll()
+            .loginPage("/login")
+            .loginProcessingUrl("/auth")
+            .defaultSuccessUrl("/dashboard", true) // Force redirect to avoid landing on cached URLs
+            .failureUrl("/login?msg=Invalid credentials")
+            .permitAll()
         )
-        .logout(l -> l
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-        );
-        
+        .logout(l -> l.logoutUrl("/logout").permitAll());
+
     return http.build();
 }
 	
