@@ -37,6 +37,9 @@ public class SecurityConfig {
                     .permitAll()
             )
             .exceptionHandling(e -> e
+                    .authenticationEntryPoint((request, response, authException) -> 
+                        response.sendRedirect("/login?msg=Please login first")
+                    )
                     .accessDeniedPage("/login?msg=Access Denied")
             );
             

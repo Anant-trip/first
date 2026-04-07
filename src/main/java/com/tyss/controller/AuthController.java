@@ -26,7 +26,7 @@ public class AuthController {
 
 	@GetMapping("/")
 	public String rootPage() {
-		return "redirect:/dashboard";
+		return "redirect:/login";
 	}
 
 	@GetMapping("/register")
@@ -60,6 +60,11 @@ public class AuthController {
 		model.addAttribute("msg", msg);
 
 		return "login";
+	}
+
+	@GetMapping("/error")
+	public String errorPage() {
+		return "redirect:/login?msg=An error occurred, please try again";
 	}
 
 }
