@@ -24,6 +24,11 @@ public class AuthController {
 
 	private final PasswordEncoder passwordEncoder;
 
+	@GetMapping("/")
+	public String rootPage() {
+		return "redirect:/dashboard";
+	}
+
 	@GetMapping("/register")
 	public String registerPage(Model model) {
 		model.addAttribute("register", new UserDto());

@@ -20,7 +20,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(req -> req
                     // Allows internal forwarding for view resolution (JSPs/Thymeleaf)
                     .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                    .requestMatchers("/register", "/login", "/auth").permitAll()
+                    .requestMatchers("/", "/register", "/login", "/auth", "/error").permitAll()
                     .requestMatchers("/WEB-INF/**", "/static/**", "/css/**", "/js/**").permitAll()
                     .anyRequest().authenticated()
             )
@@ -35,6 +35,9 @@ public class SecurityConfig {
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login?msg=Logged out")
                     .permitAll()
+            )
+            .exceptionHandling(e -> e
+                    .accessDeniedPage("/login?msg=Access Denied")
             );
             
         return http.build();
